@@ -1,5 +1,5 @@
 using xml
-using haystack
+//using haystack
 
 const class WSDLMessage : WSDLSchemaObj {
 
