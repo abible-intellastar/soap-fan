@@ -22,7 +22,7 @@ class Build : build::BuildPod
     ]
     depends = [
                 "sys 1.0",
-                "haystack 3.0",
+//                "haystack 3.0",
                 "web 1.0",
                 "xml 1.0",
                 "dom 1.0",
