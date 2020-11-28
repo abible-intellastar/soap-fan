@@ -1,6 +1,6 @@
 using xml
 using web
-using haystack
+//using haystack
 
 **
 ** Class modeling a Wsb Service Description Locator
