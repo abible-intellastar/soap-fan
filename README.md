@@ -7,4 +7,6 @@ This project intends to provide a working SOAP library for fantom developers to 
 
 Spec courtesy of https://www.w3.org/TR/wsdl.html
 
+Build and Test via Jenkins (https://www.jenkins.io/)
+
 Documentation Coming...
