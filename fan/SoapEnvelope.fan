@@ -23,7 +23,7 @@ class SOAPEnvelope {
 
   new make(WSDL wsdl) {
     this.wsdl = wsdl
-    this.ns = XNs("ns", Uri(wsdl.schema.targetNamespace))
+    this.ns = XNs("tns", Uri(wsdl.schema.targetNamespace))
 
     _init
   }
@@ -33,16 +33,11 @@ class SOAPEnvelope {
     this.body = XElem("Body", soapenv)
 
     this.soapRequest = XElem("Envelope", soapenv)
-    this.soapRequest.addAttr("xmlns:soapenv", "http://www.resourcedm.com/RDMPlantTDB/2009/03/13/")
-    this.soapRequest.addAttr("xmlns:ns", wsdl.schema.targetNamespace)
-
-    wsdlScheme := wsdl.uri.scheme
-    wsdlHost := wsdl.uri.host
-    wsdlPort := wsdl.uri.port
-
-    this.targetUri = Uri.fromStr("$wsdlScheme://$wsdlHost:$wsdlPort$wsdl.service.port.uri.pathStr?$wsdl.service.port.uri.queryStr")
-
+    this.soapRequest.addAttr("xmlns:soapenv", "http://schemas.xmlsoap.org/soap/envelope/")
+    this.soapRequest.addAttr("xmlns:tns", wsdl.schema.targetNamespace)
+    this.targetUri = wsdl.uri
     this.soapResponse = XDoc()
+    echo("Init SoapRequest: $this.soapResponse.toStr")
   }
 
   Void send() {
@@ -56,33 +51,40 @@ class SOAPEnvelope {
     // Define Headers
     client.reqHeaders.add("SOAPAction", this.soapAction)
 
+    // Define Response Content Type
+    client.reqHeaders.add("Content-Type", "text/xml;charset=UTF-8")
+
     // POST Request
     client.postStr(this.soapRequest.writeToStr)
+    echo
+    echo(client.reqHeaders)
+    this.soapRequest.write(Env.cur.out)
+    echo
 
     // Get the response
     this.soapResponse = XParser(client.resIn).parseDoc(true)
+    //echo(client.resIn.readAllLines)
 
    // DEBUG
-    //echo(client.resCode)
+    echo(client.resCode)
     //echo(client.resIn.readAllStr)
-    //echo(soapResponse.writeToStr)
+    echo(soapResponse.writeToStr)
 
   }
 
   This createRequest(Str op, [Str:Obj]? vals := null) {
     _init
 
+    //This needs to be sanity checked!
     operation := wsdl.portType.operations.find | oper | { oper.name == op }
-
-    binding := wsdl.binding.opsMap[operation.name]
+    binding   := wsdl.binding.opsMap[operation.name]
 
     this.soapAction = binding.soapAction.toStr
-//    this.targetUri = wq
-
+    echo("SoapAction: $this.soapAction")
     reqMsgName := operation.inputMessage.split(':').last
     resMsgName := operation.outputMessage.split(':').last
-
     reqBody := XElem(operation.name, ns)
+    echo
     this.reqElements = getElements(reqMsgName)
 
     reqElements.each | element | {
@@ -92,20 +94,18 @@ class SOAPEnvelope {
         elementVal = vals.find | val, key | { key == element.name }
         element.setVal(elementVal)
       }
-
-//      reqBody = reqBody.add(XElem(element.name, ns))
+      //element.write(Env.cur.out)
       reqBody = reqBody.add(element)
-//      reqBody = reqBody.add(element.setVal(elementVal))
     }
 
-//    //Assemble body
+    reqBody.write(Env.cur.out)
+    echo
+
+    //Assemble body
     body.add(reqBody)
 
     //Assemble envelope
     soapRequest.add(header).add(body)
-
-    //Assemble Document
-//    this.soapDoc = XDoc(soapRequest)
 
     return this
   }
@@ -117,27 +117,6 @@ class SOAPEnvelope {
     return list
   }
 
-//  This addVars([Str:Obj] vars) {
-//    echo("Vals to assign: $vars.keys")
-//
-//    reqElements.each | element | {
-//
-//      echo("Element $element.name")
-//      if (vars[element.name] != null) element.setVal(vars[element.name])
-//
-//    }
-//
-//    reqBody := XElem(this.soapAction.split('=').last, ns)
-//
-//    reqElements.each | element | {
-//      reqBody = reqBody.add(XElem(element.name, ns))
-//    }
-//
-//    body.add(reqBody)
-//
-//    return this
-//  }
-
   private SOAPElement[] getElements(Str msgName) {
     SOAPElement[] elements := [,]
     message := wsdl.messages.find | msg | { msg.name == msgName }
@@ -145,15 +124,9 @@ class SOAPEnvelope {
 
     if ((req is WSDLElement) && (req as WSDLElement).type is WSDLComplexType) {
       ((req as WSDLElement).type as WSDLComplexType).sequence.each | element | {
-        elements.add(SOAPElement(element.name, element.type))
+        elements.add(SOAPElement(this.ns, element.name, element.type))
       }
     }
-
-//    if (req is WSDLComplexType) {
-//      (req as WSDLComplexType).sequence.each | element | {
-//        elements.add(SOAPElement(element.name, element.type))
-//      }
-//    }
 
     return elements
   }
@@ -169,7 +142,7 @@ class SOAPElement : XElem {
 
   const Str[] enumAvail
 
-  new make(Str name, Obj typeObj) : super(this.name, ns) {
+  new make(XNs ns, Str name, Obj typeObj) : super(this.name, ns) {
     this.name = name
 
     Bool isEnum := false

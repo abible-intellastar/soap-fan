@@ -5,21 +5,23 @@ const class WSDLBinding : WSDLSchemaObj {
 
   const [Str:SOAPOperation] opsMap
 
+//  const Str name
   const Str type
   const Str transport
-  const Str style
+//  const Str style
 
   new make(XElem element) : super(element) {
+//    this.name = element.attr("name").val
     this.type = element.attr("type").val
 
     [Str:SOAPOperation] opsMap := [:]
     Str transport := Str.defVal
-    Str style := Str.defVal
+    //Str style := Str.defVal
 
     element.elems.each | elem | {
       switch (elem.name) {
         case "binding":
-          style = elem.attr("style").val
+          //style = elem.attr("style").val
           transport = elem.attr("transport").val
 
         case "operation":
@@ -32,7 +34,7 @@ const class WSDLBinding : WSDLSchemaObj {
 
     this.opsMap = opsMap
     this.transport = transport
-    this.style = style
+    //this.style = style
   }
 }
 
@@ -53,22 +55,18 @@ const class SOAPOperation : WSDLSchemaObj {
       switch (elem.name) {
         case "operation":
           soapAction = Uri(elem.attr("soapAction").val)
-
         case "input":
           elem.elems.each | e | {
             if (e.name == "header") header = SOAPHeader(e)
             else if (e.name == "body")  inputBody = SOAPBody(e)
             else throw Err("Unknown element $e in SOAPOperation input")
           }
-
         case "output":
           elem.elems.each | e | {
             if (e.name == "body") outputBody = SOAPBody(e)
             else throw Err("Unknown element $e in SOAPOperation output")
           }
-
         default:
-
       }
     }
 
@@ -77,7 +75,6 @@ const class SOAPOperation : WSDLSchemaObj {
     this.inputBody = inputBody
     this.outputBody = outputBody
   }
-
 }
 
 ** SOAP Class to model a SOAPRequest header

@@ -9,11 +9,7 @@ class Build : build::BuildPod
     podName = "soap"
     summary = "Description of this pod"
     version = Version("0.9.0") //BETA
-    // These values are optional, but recommended
-    // See: http://fantom.org/doc/docLang/Pods#meta
     meta = [
-            //"org.name":     "",
-            //"org.uri":      "",
             "proj.name":    "SOAP-Fan",
             "proj.uri":     "https://github.com/abible-intellastar/soap-fan/",
             "license.name": "MIT",
@@ -22,15 +18,11 @@ class Build : build::BuildPod
     ]
     depends = [
                 "sys 1.0",
-//                "haystack 3.0",
                 "web 1.0",
                 "xml 1.0",
                 "dom 1.0",
               ]
-    srcDirs = [`fan/`, `fan/wsdl/`]
-    // resDirs  = [,]
-    // javaDirs = [,]
-    // jsDirs   = [,]
+    srcDirs = [`fan/`, `fan/wsdl/`, `test/`]
     // docApi   = false   // defaults to 'true'
     // docSrc   = true    // defaults to 'false'
   }

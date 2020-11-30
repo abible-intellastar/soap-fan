@@ -28,9 +28,7 @@ const class WSDL {
     File? file
     WebClient? client
 
-    try {
-      file = File(uri)
-    }
+    try { file = File(uri) }
     catch (Err e) { client = WebClient(uri) }
     finally { if (client == null && file == null) throw Err("Invalid WSDL uri") }
 
