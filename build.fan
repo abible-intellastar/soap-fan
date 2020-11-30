@@ -23,8 +23,6 @@ class Build : build::BuildPod
                 "dom 1.0",
               ]
     srcDirs = [`fan/`, `fan/wsdl/`, `test/`]
-    // docApi   = false   // defaults to 'true'
-    // docSrc   = true    // defaults to 'false'
   }
 }
 
