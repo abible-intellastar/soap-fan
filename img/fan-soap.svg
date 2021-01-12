@@ -114,6 +114,15 @@
          stdDeviation="1.1398082"
          id="feGaussianBlur6905" />
     </filter>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath9809">
+      <use
+         x="0"
+         y="0"
+         xlink:href="#g9805"
+         id="use9811" />
+    </clipPath>
   </defs>
   <metadata
      id="metadata13">
@@ -129,31 +138,38 @@
   </metadata>
   <g
      id="layer1">
-    <rect
-       style="fill:url(#meshgradient3024);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter932);opacity:1"
-       id="rect23"
-       width="700"
-       height="500"
-       x="57.200001"
-       y="67.199997"
-       transform="matrix(0.9798433,0,0,0.97160552,1.0081331,-8.2966249)" />
-    <rect
-       style="stroke:#000000;stroke-width:5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1;fill:url(#radialGradient2944);filter:url(#filter3002)"
-       id="rect938"
-       width="443.30554"
-       height="243.30554"
-       x="178.34723"
-       y="178.34723" />
-    <text
-       xml:space="preserve"
-       id="text6757"
-       style="font-style:normal;font-weight:normal;font-size:133.333px;line-height:1.25;font-family:sans-serif;text-align:center;white-space:pre;shape-inside:url(#rect6759);opacity:0.98;fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1;filter:url(#filter6903)"
-       x="177.47395"
-       y="0"
-       transform="translate(2.8327484,51.702233)"><tspan
-         x="216.17886"
-         y="299.99139"><tspan
-           style="font-size:133.333px;text-align:center;text-anchor:middle;stroke:#000000;stroke-opacity:1">SOAP</tspan></tspan></text>
+    <g
+       id="g9807"
+       clip-path="url(#clipPath9809)">
+      <g
+         id="g9805">
+        <rect
+           style="fill:url(#meshgradient3024);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter932);opacity:1"
+           id="rect23"
+           width="700"
+           height="500"
+           x="57.200001"
+           y="67.199997"
+           transform="matrix(0.9798433,0,0,0.97160552,1.0081331,-8.2966249)" />
+        <rect
+           style="stroke:#000000;stroke-width:5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1;fill:url(#radialGradient2944);filter:url(#filter3002)"
+           id="rect938"
+           width="443.30554"
+           height="243.30554"
+           x="178.34723"
+           y="178.34723" />
+        <text
+           xml:space="preserve"
+           id="text6757"
+           style="font-style:normal;font-weight:normal;font-size:133.333px;line-height:1.25;font-family:sans-serif;text-align:center;white-space:pre;shape-inside:url(#rect6759);opacity:0.98;fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1;filter:url(#filter6903)"
+           x="177.47395"
+           y="0"
+           transform="translate(2.8327484,51.702233)"><tspan
+             x="216.17886"
+             y="299.99139"><tspan
+               style="font-size:133.333px;text-align:center;text-anchor:middle;stroke:#000000;stroke-opacity:1">SOAP</tspan></tspan></text>
+      </g>
+    </g>
   </g>
   <script
      id="mesh_polyfill"
