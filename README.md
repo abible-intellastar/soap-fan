@@ -1,4 +1,4 @@
-![soap fan](https://github.com/abible-intellastar/soap-fan/blob/master/img/fan-soap.svg)
+![soap fan](/img/soap-fan.svg)
 
 A Simple SOAP Interface Package Built For Fantom
 
