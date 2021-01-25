@@ -37,13 +37,13 @@ class SOAPEnvelope {
     this.soapRequest.addAttr("xmlns:tns", wsdl.schema.targetNamespace)
     this.targetUri = wsdl.uri
     this.soapResponse = XDoc()
-    echo("Init SoapRequest: $this.soapResponse.toStr")
+//    echo("Init SoapRequest: $this.soapResponse.toStr")
   }
 
   Void send() {
     // Sanity Check
     if (this.targetUri == null) throw ArgErr("No target URI available")
-    echo(targetUri)
+//    echo(targetUri)
 
     // Define Client
     WebClient client := WebClient(this.targetUri)
@@ -56,19 +56,19 @@ class SOAPEnvelope {
 
     // POST Request
     client.postStr(this.soapRequest.writeToStr)
-    echo
-    echo(client.reqHeaders)
-    this.soapRequest.write(Env.cur.out)
-    echo
+//    echo
+//    echo(client.reqHeaders)
+//    this.soapRequest.write(Env.cur.out)
+//    echo
 
     // Get the response
     this.soapResponse = XParser(client.resIn).parseDoc(true)
     //echo(client.resIn.readAllLines)
 
    // DEBUG
-    echo(client.resCode)
+//    echo(client.resCode)
     //echo(client.resIn.readAllStr)
-    echo(soapResponse.writeToStr)
+//    echo(soapResponse.writeToStr)
 
   }
 
@@ -80,11 +80,11 @@ class SOAPEnvelope {
     binding   := wsdl.binding.opsMap[operation.name]
 
     this.soapAction = binding.soapAction.toStr
-    echo("SoapAction: $this.soapAction")
+//    echo("SoapAction: $this.soapAction")
     reqMsgName := operation.inputMessage.split(':').last
     resMsgName := operation.outputMessage.split(':').last
     reqBody := XElem(operation.name, ns)
-    echo
+//    echo
     this.reqElements = getElements(reqMsgName)
 
     reqElements.each | element | {
@@ -99,7 +99,7 @@ class SOAPEnvelope {
     }
 
     reqBody.write(Env.cur.out)
-    echo
+//    echo
 
     //Assemble body
     body.add(reqBody)

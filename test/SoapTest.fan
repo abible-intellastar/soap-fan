@@ -29,6 +29,7 @@ class SoapTest : Test
 
   Void testSoapService() {
     req  := env.createRequest("Subtract")
+    echo
     echo("====================")
     echo("Create Request: $req.soapAction")
     echo("Fields:")
@@ -39,6 +40,7 @@ class SoapTest : Test
     req1.send
     echo("SOAP Response")
     req1.soapResponse.write(Env.cur.out)
+    echo
   }
 
   override Void teardown() {}
